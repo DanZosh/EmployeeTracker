@@ -1,5 +1,7 @@
-// Import ascii-art logo
-const logo = require('asciiart-logo');
+//DEPENDENCIES
+//NPM PACKAGES
+    // Import ascii-art logo
+    const logo = require('asciiart-logo');
 
 const art = function(){
     const subtext1 = 'TRACK YOUR EMPLOYEES';
@@ -25,7 +27,7 @@ const art = function(){
     );
 }
 
-
+art()
 
 
 

@@ -15,9 +15,6 @@ name VARCHAR(30) NOT NULL,
 -- Sets id as this table's primary key which means all data contained within it will be unique --
 PRIMARY KEY (id)
 );
--- Creates new rows containing data in all named columns --
-INSERT INTO department (name)
-VALUES ("Sales");
 
 SELECT * FROM department;
 
@@ -35,9 +32,6 @@ department_id INT(11) NOT NULL,
 -- Sets id as this table's primary key which means all data contained within it will be unique --
 PRIMARY KEY (id)
 );
--- Creates new rows containing data in all named columns --
-INSERT INTO role (title, salary, department_id)
-VALUES ("Manager", 100000, 1);
 
 SELECT * FROM role;
 
@@ -57,8 +51,5 @@ manager_id INT(11),
 -- Sets id as this table's primary key which means all data contained within it will be unique --
 PRIMARY KEY (id)
 );
--- Creates new rows containing data in all named columns --
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Dan", "Maier", 2, 4);
 
 SELECT * FROM employee;
