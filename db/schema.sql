@@ -6,8 +6,8 @@ CREATE DATABASE employees_db;
 USE employees_db;
 
 -- department TABLE
--- Creates the table "people" within employees_db --
-CREATE TABLE department (
+-- Creates the table "departments" within employees_db --
+CREATE TABLE departments (
 -- Creates a numeric column called "id" which will automatically increment its default value as we create new rows --
 id INT(11) AUTO_INCREMENT NOT NULL,
 -- Makes a string column called "name" which cannot contain null --
@@ -16,11 +16,11 @@ name VARCHAR(30) NOT NULL,
 PRIMARY KEY (id)
 );
 
-SELECT * FROM department;
+SELECT * FROM departments;
 
 -- role TABLE
--- Creates the table "role" within employees_db --
-CREATE TABLE role (
+-- Creates the table "roles" within employees_db --
+CREATE TABLE roles (
 -- Creates a numeric column called "id" which will automatically increment its default value as we create new rows --
 id INT(11) AUTO_INCREMENT NOT NULL,
 -- Makes a string column called "title" which cannot contain null --
@@ -33,11 +33,11 @@ department_id INT(11) NOT NULL,
 PRIMARY KEY (id)
 );
 
-SELECT * FROM role;
+SELECT * FROM roles;
 
 -- role TABLE
 -- Creates the table "employee" within employees_db --
-CREATE TABLE employee (
+CREATE TABLE employees (
 -- Creates a numeric column called "id" which will automatically increment its default value as we create new rows --
 id INT(11) AUTO_INCREMENT NOT NULL,
 -- Makes a string column called "first_name" which cannot contain null --
@@ -52,4 +52,4 @@ manager_id INT(11),
 PRIMARY KEY (id)
 );
 
-SELECT * FROM employee;
+SELECT * FROM employees;
