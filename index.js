@@ -15,36 +15,35 @@
 	const connection = require("./db/connection")
 
 
-	// const startMenu = [
-	// 	{
-	// 		type: 'list',
-	// 		name: 'startMenu',
-	// 		message: 'WHAT WOULD YOU LIKE TO DO',
-	// 		choices:[
-	// 			'View all employees',
-	// 			'View all employees by department',
-	// 			'View all employees by manager',
-	// 			'Add employee',
-	// 			'Remove employee',
-	// 			'Update employee role',
-	// 			'Update employee manager',
-	// 			'View all roles',
-	// 			'Add roles',
-	// 			'Remove roles',
-	// 			'View all departments',
-	// 			'Add department',
-	// 			'Remove department',
-	// 			'QUIT'
-	// 		]
-	// 	},
-	// ]
+	const startMenu = [
+		{
+			type: 'list',
+			name: 'startMenu',
+			message: 'WHAT WOULD YOU LIKE TO DO?',
+			choices:[
+				'View all employees',
+				'View all employees by department',
+				'View all employees by manager',
+				'Add employee',
+				'Remove employee',
+				'Update employee role',
+				'Update employee manager',
+				'View all roles',
+				'Add roles',
+				'Remove roles',
+				'View all departments',
+				'Add department',
+				'Remove department',
+				'QUIT'
+			]
+		},
+	]
+	console.log(startMenu)
 
-// 	//add department action
-// 	inquirer
-//     .prompt(questions).then((data) => {
-//             // console.log(data)
-//             // const filename = './hidden_resources/trashReadMe/'+`${data.promptTitle.toLowerCase().split(' ').join('')}.md`
-//             const filename = `./${data.promptTitle.toLowerCase().split(' ').join('')}.md`
-//             const markdownContent = generateMarkdown(data)
 
-// });
+	inquirer
+		.prompt(startMenu).then((response) => {
+			console.log('success');
+			console.log(response);
+			
+});
