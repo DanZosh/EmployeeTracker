@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/DanZosh/EmployeeTracker#readme",
   "dependencies": {
+    "asciiart-logo": "^0.2.6",
     "console.table": "^0.10.0",
     "inquirer": "^0.2.3",
     "mysql": "^2.18.1"
