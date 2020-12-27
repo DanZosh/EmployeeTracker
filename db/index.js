@@ -13,4 +13,26 @@ module.exports = {
         return connection.query("SELECT * FROM employees")
     },
 
+    createDepartment(data) {
+        console.log('Creating a new department...')
+        console.log(`The ${data.name} department has been created \n`)
+        return connection.query(
+            "INSERT INTO departments SET ?", data
+        );
+    }
+
+    // createRole(data) {
+    //     connection.query(
+    //         "INSERT INTO roles SET ?", 
+    //         {
+    //             title: data.title,
+    //             salary: data.salary,
+    //             department_id: data.department_id,
+    //         }
+    //     //   , function(err) {
+    //     //     if (err) throw err;
+    //     //   }
+    //     );
+    // }
+
 }

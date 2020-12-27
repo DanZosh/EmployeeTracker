@@ -36,7 +36,7 @@ function startQuestions(){
 				// '9. Add roles',
 				// '10. Remove roles',
 				'11. View all departments',
-				// '12. Add department',
+				'12. Add department',
 				// '13. Remove department',
 				'14. QUIT \n \n'
 			]
@@ -55,8 +55,16 @@ function startQuestions(){
 					viewRoles_8();
 					break;
 
+				// case '9. Add roles':
+				// 	addRoles_9();
+				// 	break;
+
 				case '11. View all departments':
 					viewDepartments_11();
+					break;
+
+				case '12. Add department':
+					addDepartments_12();
 					break;
 				
 				default:
@@ -68,6 +76,29 @@ function startQuestions(){
 }
 startQuestions();
 
+function viewEmployees_1(){
+	console.log("\n\n Here are the roles:");
+		db
+		.getEmployees()
+		.then((results) =>{
+		console.table(results);
+		startQuestions();
+		});
+	}
+	function viewRoles_8(){
+		console.log("\n\n Here are the roles:");
+		db
+		.getRoles()
+		.then((results) => {
+		console.table(results);
+		startQuestions();
+		});
+	}
+	
+	// function addRoles_9(){
+	// 	createRole()
+	
+	// }
 
 function viewDepartments_11(){
 	console.log("\n\n Here are the departments:");
@@ -78,24 +109,23 @@ function viewDepartments_11(){
 	startQuestions();
 	});
 }
-
-function viewRoles_8(){
-	console.log("\n\n Here are the roles:");
-	db
-	.getRoles()
+function addDepartments_12(){
+	console.log("\n\n Lets add a new Department!");
+	inquirer
+	.prompt({
+		type:'input',
+		name: 'name',
+		message: 'What is the name of the department?'
+		}
+	)
 	.then((results) => {
-	console.table(results);
-	startQuestions();
-	});
-}
-
-
-function viewEmployees_1(){
-console.log("\n\n Here are the roles:");
+		
 	db
-	.getEmployees()
-	.then((results) =>{
-	console.table(results);
+	.createDepartment(results);
 	startQuestions();
 	});
 }
+
+
+
+
