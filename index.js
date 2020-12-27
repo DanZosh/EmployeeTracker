@@ -48,29 +48,15 @@ function startQuestions(){
 			// console.log(response.startMenu);
 			switch(response.startMenu){
 				case '1. View all employees':
-					console.log("Here are the employees:");
-					db.getEmployees().then((results) =>
-					console.table(results)
-					)
-					startQuestions()
+					viewEmployees_1();
 					break;
 				
 				case '8. View all roles':
-					console.log("Here are the roles:");
-					db.getRoles().then((results) =>
-					console.table(results)
-					)
-					startQuestions()
+					viewRoles_8();
 					break;
 
 				case '11. View all departments':
-					console.log("Here are the departments:");
-					db.getDepartments().then((results) =>{
-					console.table(results);
-					console.log("\n");
-					})
-					// .then(startQuestions())
-					// startQuestions()
+					viewDepartments_11();
 					break;
 				
 				default:
@@ -80,5 +66,36 @@ function startQuestions(){
 			}
 		);	
 }
+startQuestions();
 
-startQuestions()
+
+function viewDepartments_11(){
+	console.log("\n\n Here are the departments:");
+	db
+	.getDepartments()
+	.then((results) =>{
+	console.table(results);
+	startQuestions();
+	});
+}
+
+function viewRoles_8(){
+	console.log("\n\n Here are the roles:");
+	db
+	.getRoles()
+	.then((results) => {
+	console.table(results);
+	startQuestions();
+	});
+}
+
+
+function viewEmployees_1(){
+console.log("\n\n Here are the roles:");
+	db
+	.getEmployees()
+	.then((results) =>{
+	console.table(results);
+	startQuestions();
+	});
+}
