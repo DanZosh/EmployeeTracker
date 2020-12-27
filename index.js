@@ -37,7 +37,7 @@ function startQuestions(){
 				// '10. Remove roles',
 				'11. View all departments',
 				'12. Add department',
-				// '13. Remove department',
+				'13. Remove department',
 				'14. QUIT \n \n'
 			]
 		}];
@@ -65,6 +65,10 @@ function startQuestions(){
 
 				case '12. Add department':
 					addDepartments_12();
+					break;
+
+				case '13. Remove department':
+					removeDepartments_13();
 					break;
 				
 				default:
@@ -115,7 +119,7 @@ function addDepartments_12(){
 	.prompt({
 		type:'input',
 		name: 'name',
-		message: 'What is the name of the department?'
+		message: 'What is the name of the new department?'
 		}
 	)
 	.then((results) => {
@@ -126,6 +130,54 @@ function addDepartments_12(){
 	});
 }
 
+function removeDepartments_13(){
+	console.log("\n\n OK, let's remove a Department!");
+	// let currentDepartments = []
+	//get the departments and store in `currentDepartments`
+	db
+	.getDepartments()
+	.then( (departments) => {
+		// //WHAT DOES OUR RAW DATA LOOK LIKE
+		// 	console.log("raw: ")
+		// 	console.log(departments)
 
+			//REMOVE THE DATA FROM THE ROWDATAPACKET
+			// currentDepartments = JSON.stringify(departments)
+			// 	console.log("stringified: ")
+			// 	console.log(currentDepartments)
+			//stringified is not as effective as map because while we're getting the objects out of RowDataPacket, we really need to transform the object to have keys of value and name for inquirer to work. so we'd have to map or do a for loop on the array to change the key names anyway.
+		const departmentChoices = departments.map((boop) => ({
+			value:boop.id, //`value` is what gets returned in an object where the key is prompt.name and the value is boop.id when the user selects from the list provided, the list provided, though, is the `name`
+			name:boop.name
+		}))
+		// //WHAT DOES OUR RAW DATA LOOK LIKE
+		// console.log( "mapped: ")
+		// console.log(departmentChoices)
+	inquirer
+	.prompt([
+		{
+		type:'list',
+		name: 'department_id',
+		message: 'Select a department to be removed.',
+		choices:departmentChoices
+		}
+	])
+	.then((results) => {
+		// console.log("results =")
+		// console.log(results)
 
-
+		//GET THE NAME OF THE REMOVED DEPARTMENT TO ALERT THE USER
+		let deletedNameArr = departmentChoices.filter((anObject) => {
+			if (anObject.value == results.department_id){
+				return(anObject)
+			}
+		})
+		let deletedName = (deletedNameArr[0].name)
+		// console.log(deletedName)
+	db
+	.deleteDepartment(results.department_id);
+	console.log(`The ${deletedName} department has been deleted \n`)
+	startQuestions();
+	});
+})
+}

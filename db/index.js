@@ -19,7 +19,15 @@ module.exports = {
         return connection.query(
             "INSERT INTO departments SET ?", data
         );
-    }
+    },
+
+    deleteDepartment(data) {
+        console.log('Deleting department...')
+
+        return connection.query(
+            "DELETE FROM departments WHERE id=?", data
+        );
+    },
 
     // createRole(data) {
     //     connection.query(
