@@ -8,6 +8,16 @@ module.exports = {
         return connection.query("SELECT * FROM employees")
     },
 
+    getEmployees_byDept2(data){
+        // return connection.query("SELECT * FROM employees WHERE role_id = ?", data)
+        return connection.query("SELECT * FROM employees WHERE role_id IN (SELECT id FROM roles WHERE department_id = ?)", data)
+    },
+
+    // viewEmployees_byManager3(){
+    //     return connection.query("SELECT * FROM employees WHERE manager_id = ?", data)
+    // },
+
+
     getManagers(){
         return connection.query("SELECT * FROM employees WHERE manager_id IS NULL")
     },

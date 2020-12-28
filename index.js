@@ -26,7 +26,7 @@ function startQuestions(){
 			message: 'WHAT WOULD YOU LIKE TO DO?',
 			choices:[
 				'1. View all employees',
-				// '2. View all employees by department',
+				'2. View all employees by department',
 				// '3. View all employees by manager',
 				'4. Add employee',
 				// '5. Remove employee',
@@ -50,11 +50,16 @@ function startQuestions(){
 				case '1. View all employees':
 					viewEmployees_1();
 					break;
-
+				case '2. View all employees by department':
+					viewEmployees_byDept2();
+					break;
+				case '3. View all employees by manager':
+					viewEmployees_byManager3();
+					break;
 				case '4. Add employee':
 					addEmployees_4();
 					break;
-				
+			
 				case '8. View all roles':
 					viewRoles_8();
 					break;
@@ -80,17 +85,59 @@ function startQuestions(){
 startQuestions();
 
 function viewEmployees_1(){
-	console.log("\n\n Here are the roles:");
+	console.log("\n\n Here are the Employees:");
 		db
 		.getEmployees_1()
 		.then((results) =>{
-		console.table(results);
-		startQuestions();
+			console.table(results);
+			startQuestions();
 		});
 	}
 
+	function viewEmployees_byDept2(){
+	// console.log("\n\n Here are the Employees:");
+	db
+	.getDepartments_11()
+	.then( (departments) => {
+		
+		const departmentChoices = departments.map((boop) => ({
+			value:boop.id, 
+			name:boop.name
+		}))
+		inquirer
+		.prompt([
+			{
+			type:'list',
+			name: 'department_id',
+			message: 'Select the department in which to see the employees.',
+			choices:departmentChoices
+			},
+		]
+		)
+		.then((results) => {
+			// console.log(results.department_id)
+			db
+			.getEmployees_byDept2(results.department_id)
+			.then((res) =>{
+				console.log(res)
+				console.table(res);
+				startQuestions();
+				});
+		});
+	})
+}
 
-	// 4. Add employee
+
+	// function viewEmployees_byManager3(){
+	// 	console.log("\n\n Here are the Employees:");
+	// 		db
+	// 		.getEmployees_byManager3()
+	// 		.then((results) =>{
+	// 		console.table(results);
+	// 		startQuestions();
+	// 		});
+	// 	}
+
 
 	function addEmployees_4(){
 		console.log("\n\n OK, let's add an Employee!");
@@ -107,7 +154,6 @@ function viewEmployees_1(){
 		
 
 	db
-	// .getEmployees_1()
 	.getManagers()
 	.then( (managers) => {
 		console.log("raw managers")
@@ -142,12 +188,6 @@ function viewEmployees_1(){
 		message: 'Select the role in which they will serve.',
 		choices:rolesChoices
 		},
-		// {
-		// type:'list',
-		// name: 'managerBoolean',
-		// message: "What is the employee's last name",
-		// choices:["yes","no"]
-		// },
 		{
 		type:'list',
 		name: 'manager_id',
@@ -187,25 +227,6 @@ function viewEmployees_1(){
 });
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	function viewRoles_8(){
 		console.log("\n\n Here are the roles:");
