@@ -107,7 +107,8 @@ function viewEmployees_1(){
 		
 
 	db
-	.getEmployees_1()
+	// .getEmployees_1()
+	.getManagers()
 	.then( (managers) => {
 		console.log("raw managers")
 		console.log(managers)

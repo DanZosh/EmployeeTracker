@@ -7,13 +7,9 @@ module.exports = {
     getEmployees_1(){
         return connection.query("SELECT * FROM employees")
     },
+
     getManagers(){
-        //ATTEMPT1
-        // return connection.query("SELECT * FROM employees WHERE title LIKE %manager%")
-        //ATTEMPT2
-        return connection.query("SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM employee WHERE id IN (SELECT manager_id FROM employee WHERE manager_id IS NOT NULL GROUP BY manager_id")
-        // FOR TESTING
-        return connection.query("SELECT * FROM employees")
+        return connection.query("SELECT * FROM employees WHERE manager_id IS NULL")
     },
 
     createEmployee_2(data){
@@ -23,8 +19,6 @@ module.exports = {
             "INSERT INTO employees SET ?", data
         );
     },
-
-
 
     getRoles_8(){
         return connection.query("SELECT * FROM roles")
