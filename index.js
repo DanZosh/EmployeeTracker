@@ -28,7 +28,7 @@ function startQuestions(){
 				'1. View all employees',
 				// '2. View all employees by department',
 				// '3. View all employees by manager',
-				// '4. Add employee',
+				'4. Add employee',
 				// '5. Remove employee',
 				// '6. Update employee role',
 				// '7. Update employee manager',
@@ -50,27 +50,26 @@ function startQuestions(){
 				case '1. View all employees':
 					viewEmployees_1();
 					break;
+
+				case '4. Add employee':
+					addEmployees_4();
+					break;
 				
 				case '8. View all roles':
 					viewRoles_8();
 					break;
-
 				case '9. Add roles':
 					addRoles_9();
 					break;
-
 				case '11. View all departments':
 					viewDepartments_11();
 					break;
-
 				case '12. Add department':
 					addDepartments_12();
 					break;
-
 				case '13. Remove department':
 					removeDepartments_13();
 					break;
-				
 				default:
 					connection.end();
 
@@ -89,6 +88,124 @@ function viewEmployees_1(){
 		startQuestions();
 		});
 	}
+
+
+	// 4. Add employee
+
+	function addEmployees_4(){
+		console.log("\n\n OK, let's add an Employee!");
+	db
+	.getRoles_8()
+	.then( (roles) => {
+		console.log("raw roles")
+		console.log(roles)
+		
+		const rolesChoices = roles.map((boop) => ({
+			value:boop.id, 
+			name:boop.title
+		}))
+		
+
+	db
+	.getEmployees_1()
+	.then( (managers) => {
+		console.log("raw managers")
+		console.log(managers)
+		
+		const managersChoices = managers.map((boop) => ({
+			value:boop.id, 
+			name:boop.first_name+' '+boop.last_name
+		}))
+//ADD A NULL OBJECT IN CASE THE EMPLOYEE HAS NO MANAGER
+		const nullObj = {
+			value:null, 
+			name:null
+		};
+		managersChoices.push(nullObj);
+		console.log(managersChoices);
+	inquirer
+	.prompt([
+		{
+		type:'input',
+		name: 'first_name',
+		message: "What is the employee's first name"
+		},
+		{
+		type:'input',
+		name: 'last_name',
+		message: "What is the employee's last name",
+		},
+		{
+		type:'list',
+		name: 'role_id',
+		message: 'Select the role in which they will serve.',
+		choices:rolesChoices
+		},
+		// {
+		// type:'list',
+		// name: 'managerBoolean',
+		// message: "What is the employee's last name",
+		// choices:["yes","no"]
+		// },
+		{
+		type:'list',
+		name: 'manager_id',
+		message: "Select the manager serving the employee, select null if not applicable.",
+		choices:managersChoices
+		}
+	])
+	
+	.then((results) => {
+		console.log("Raw input results:")
+		console.log(results)
+
+		resultsObject = {
+			first_name:results.first_name,
+			last_name: results.last_name,
+			role_id: results.role_id,
+			manager_id:results.manager_id
+		}
+
+
+		// //GET THE NAME OF THE ROLE TO ALERT THE USER
+		let roleNameArr = rolesChoices.filter((anObject) => {
+			if (anObject.value == results.role_id){
+				return(anObject)
+			}
+		})
+		let roleName = (roleNameArr[0].name)
+		console.log(roleName)
+	db
+	.createEmployee_2(resultsObject);
+	console.log(`The employee ${results.first_name} ${results.last_name} has been added as ${roleName}. \n`)
+	//OPPORTUNITY TO FLEX HERE, ADD BACK THE ROLL
+
+	startQuestions();
+		});
+	});
+});
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	function viewRoles_8(){
 		console.log("\n\n Here are the roles:");
 		db
@@ -98,13 +215,6 @@ function viewEmployees_1(){
 		startQuestions();
 		});
 	}
-	
-
-
-
-
-
-
 	
 	function addRoles_9(){
 		console.log("\n\n OK, let's add a Role!");
@@ -156,7 +266,7 @@ function viewEmployees_1(){
 			}
 		})
 		let deptName = (deptNameArr[0].name)
-		// console.log(deletedName)
+		// console.log(deptName)
 	db
 	.createRole_9(resultsObject);
 	console.log(`The role ${results.roleTitle} with a salary of $${results.roleSalary} has been added to the ${deptName} department. \n`)
@@ -251,4 +361,4 @@ function removeDepartments_13(){
 	startQuestions();
 	});
 })
-}
+};

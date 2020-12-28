@@ -35,7 +35,7 @@ PRIMARY KEY (id),
 FOREIGN KEY (department_id)
     REFERENCES departments(id)
     ON DELETE CASCADE
-
+    ON UPDATE CASCADE
 );
 
 -- DROP TABLE roles;
@@ -53,10 +53,22 @@ first_name VARCHAR(30) NOT NULL,
 last_name VARCHAR(30) NOT NULL,
 -- Makes an integer column called "role_id" which cannot contain null --
 role_id INT(11) NOT NULL,
--- Makes an integer column called "manager_id" which cannot contain null --
+-- Makes an integer column called "manager_id" which can contain null --
 manager_id INT(11),
 -- Sets id as this table's primary key which means all data contained within it will be unique --
-PRIMARY KEY (id)
+PRIMARY KEY (id),
+-- Set foreign key to the department key
+FOREIGN KEY (role_id)
+    REFERENCES roles(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+-- Makes an integer column called "manager_id" which cannot contain null --
+FOREIGN KEY(manager_id)
+    REFERENCES employees (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
+
+-- DROP TABLE employees;
 
 SELECT * FROM employees;
