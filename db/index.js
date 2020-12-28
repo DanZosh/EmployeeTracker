@@ -13,16 +13,16 @@ module.exports = {
         return connection.query("SELECT * FROM employees WHERE role_id IN (SELECT id FROM roles WHERE department_id = ?)", data)
     },
 
-    // viewEmployees_byManager3(){
-    //     return connection.query("SELECT * FROM employees WHERE manager_id = ?", data)
-    // },
+    viewEmployees_byManager3(data){
+        return connection.query("SELECT * FROM employees WHERE manager_id = ?", data)
+    },
 
 
     getManagers(){
         return connection.query("SELECT * FROM employees WHERE manager_id IS NULL")
     },
 
-    createEmployee_2(data){
+    createEmployee_4(data){
         console.log("from Create Employee:")
         console.log(data)
         connection.query(

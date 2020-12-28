@@ -27,7 +27,7 @@ function startQuestions(){
 			choices:[
 				'1. View all employees',
 				'2. View all employees by department',
-				// '3. View all employees by manager',
+				'3. View all employees by manager',
 				'4. Add employee',
 				// '5. Remove employee',
 				// '6. Update employee role',
@@ -94,7 +94,7 @@ function viewEmployees_1(){
 		});
 	}
 
-	function viewEmployees_byDept2(){
+function viewEmployees_byDept2(){
 	// console.log("\n\n Here are the Employees:");
 	db
 	.getDepartments_11()
@@ -128,15 +128,40 @@ function viewEmployees_1(){
 }
 
 
-	// function viewEmployees_byManager3(){
-	// 	console.log("\n\n Here are the Employees:");
-	// 		db
-	// 		.getEmployees_byManager3()
-	// 		.then((results) =>{
-	// 		console.table(results);
-	// 		startQuestions();
-	// 		});
-	// 	}
+function viewEmployees_byManager3(){
+// console.log("\n\n Here are the Employees:");
+	db
+	.getManagers()
+	.then( (managers) => {
+		console.log("raw managers")
+		console.log(managers)
+		
+		const managerChoices = managers.map((boop) => ({
+			value:boop.id, 
+			name:boop.first_name+' '+boop.last_name
+		}))
+		inquirer
+		.prompt([
+			{
+			type:'list',
+			name: 'manager_id',
+			message: 'Select the manager for whom you with to see their direct reports.',
+			choices:managerChoices
+			},
+		]
+		)
+		.then((results) => {
+			console.log(results.manager_id)
+			db
+			.viewEmployees_byManager3(results.manager_id)
+			.then((res) =>{
+				console.log(res)
+				console.table(res);
+				startQuestions();
+				});
+		});
+	})
+}
 
 
 	function addEmployees_4(){
@@ -217,7 +242,7 @@ function viewEmployees_1(){
 		let roleName = (roleNameArr[0].name)
 		console.log(roleName)
 	db
-	.createEmployee_2(resultsObject);
+	.createEmployee_4(resultsObject);
 	console.log(`The employee ${results.first_name} ${results.last_name} has been added as ${roleName}. \n`)
 	//OPPORTUNITY TO FLEX HERE, ADD BACK THE ROLL
 
