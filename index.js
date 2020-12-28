@@ -99,10 +99,81 @@ function viewEmployees_1(){
 		});
 	}
 	
-	function addRoles_9(){
-		createRole_9()
+
+
+
+
+
+
 	
-	}
+	function addRoles_9(){
+		console.log("\n\n OK, let's add a Role!");
+	db
+	.getDepartments_11()
+	.then( (departments) => {
+		
+		const departmentChoices = departments.map((boop) => ({
+			value:boop.id, 
+			name:boop.name
+		}))
+
+	inquirer
+	.prompt([
+		{
+		type:'input',
+		name: 'roleTitle',
+		message: 'What is the role Title.'
+		},
+		{
+		type:'input',
+		name: 'roleSalary',
+		message: 'what is the salary of the role.',
+		},
+		{
+		type:'list',
+		name: 'department_id',
+		message: 'Select the department to which the role will be added.',
+		choices:departmentChoices
+		},
+	]
+	)
+	
+	.then((results) => {
+		console.log("Raw input results:")
+		console.log(results)
+
+		resultsObject = {
+			title:results.roleTitle,
+			salary: results.roleSalary,
+			department_id:results.department_id
+		}
+
+
+		//GET THE NAME OF THE REMOVED DEPARTMENT TO ALERT THE USER
+		let deptNameArr = departmentChoices.filter((anObject) => {
+			if (anObject.value == results.department_id){
+				return(anObject)
+			}
+		})
+		let deptName = (deptNameArr[0].name)
+		// console.log(deletedName)
+	db
+	.createRole_9(resultsObject);
+	console.log(`The role ${results.roleTitle} with a salary of $${results.roleSalary} has been added to the ${deptName} department. \n`)
+
+	startQuestions();
+	});
+})
+}
+
+
+
+
+
+
+
+
+
 
 function viewDepartments_11(){
 	console.log("\n\n Here are the departments:");
@@ -141,7 +212,7 @@ function removeDepartments_13(){
 		// 	console.log("raw: ")
 		// 	console.log(departments)
 
-			//REMOVE THE DATA FROM THE ROWDATAPACKET
+			//REMOVE THE DATA FROM THE RowDataPacket
 			// currentDepartments = JSON.stringify(departments)
 			// 	console.log("stringified: ")
 			// 	console.log(currentDepartments)
@@ -167,12 +238,12 @@ function removeDepartments_13(){
 		// console.log(results)
 
 		//GET THE NAME OF THE REMOVED DEPARTMENT TO ALERT THE USER
-		let deletedNameArr = departmentChoices.filter((anObject) => {
+		let deptNameArr = departmentChoices.filter((anObject) => {
 			if (anObject.value == results.department_id){
 				return(anObject)
 			}
 		})
-		let deletedName = (deletedNameArr[0].name)
+		let deletedName = (deptNameArr[0].name)
 		// console.log(deletedName)
 	db
 	.deleteDepartment_13(results.department_id);

@@ -30,18 +30,11 @@ module.exports = {
     },
 
     createRole_9(data) {
-        console.log("Create Role 9")
-        // connection.query(
-            // "INSERT INTO roles SET ?", 
-            // {
-            //     title: data.title,
-            //     salary: data.salary,
-            //     department_id: data.department_id,
-            // }
-        //   , function(err) {
-        //     if (err) throw err;
-        //   }
-        // );
+        console.log("from Create Roll:")
+        console.log(data)
+        connection.query(
+            "INSERT INTO roles SET ?", data
+        );
     }
 
 }
