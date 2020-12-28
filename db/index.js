@@ -3,17 +3,17 @@
     const connection = require("./connection");
 
 module.exports = {
-    getDepartments(){
+    getDepartments_11(){
         return connection.query("SELECT * FROM departments")
     },
-    getRoles(){
+    getRoles_8(){
         return connection.query("SELECT * FROM roles")
     },
-    getEmployees(){
+    getEmployees_1(){
         return connection.query("SELECT * FROM employees")
     },
 
-    createDepartment(data) {
+    createDepartment_12(data) {
         console.log('Creating a new department...')
         console.log(`The ${data.name} department has been created \n`)
         return connection.query(
@@ -21,7 +21,7 @@ module.exports = {
         );
     },
 
-    deleteDepartment(data) {
+    deleteDepartment_13(data) {
         console.log('Deleting department...')
 
         return connection.query(
@@ -29,18 +29,19 @@ module.exports = {
         );
     },
 
-    // createRole(data) {
-    //     connection.query(
-    //         "INSERT INTO roles SET ?", 
-    //         {
-    //             title: data.title,
-    //             salary: data.salary,
-    //             department_id: data.department_id,
-    //         }
-    //     //   , function(err) {
-    //     //     if (err) throw err;
-    //     //   }
-    //     );
-    // }
+    createRole_9(data) {
+        console.log("Create Role 9")
+        // connection.query(
+            // "INSERT INTO roles SET ?", 
+            // {
+            //     title: data.title,
+            //     salary: data.salary,
+            //     department_id: data.department_id,
+            // }
+        //   , function(err) {
+        //     if (err) throw err;
+        //   }
+        // );
+    }
 
 }

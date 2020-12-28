@@ -5,7 +5,7 @@ CREATE DATABASE employees_db;
 -- Makes it so all of the following code will affect employees_db --
 USE employees_db;
 
--- department TABLE
+-- departments TABLE
 -- Creates the table "departments" within employees_db --
 CREATE TABLE departments (
 -- Creates a numeric column called "id" which will automatically increment its default value as we create new rows --
@@ -18,7 +18,7 @@ PRIMARY KEY (id)
 
 SELECT * FROM departments;
 
--- role TABLE
+-- roles TABLE
 -- Creates the table "roles" within employees_db --
 CREATE TABLE roles (
 -- Creates a numeric column called "id" which will automatically increment its default value as we create new rows --
@@ -30,12 +30,19 @@ salary DECIMAL(10,2) NOT NULL,
 -- Makes an integer column called "department_id" which cannot contain null --
 department_id INT(11) NOT NULL,
 -- Sets id as this table's primary key which means all data contained within it will be unique --
-PRIMARY KEY (id)
+PRIMARY KEY (id),
+-- Set foreign key to the department key
+FOREIGN KEY (department_id)
+    REFERENCES departments(id)
+    ON DELETE CASCADE
+
 );
+
+-- DROP TABLE roles;
 
 SELECT * FROM roles;
 
--- role TABLE
+-- employees TABLE
 -- Creates the table "employee" within employees_db --
 CREATE TABLE employees (
 -- Creates a numeric column called "id" which will automatically increment its default value as we create new rows --

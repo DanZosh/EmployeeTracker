@@ -33,7 +33,7 @@ function startQuestions(){
 				// '6. Update employee role',
 				// '7. Update employee manager',
 				'8. View all roles',
-				// '9. Add roles',
+				'9. Add roles',
 				// '10. Remove roles',
 				'11. View all departments',
 				'12. Add department',
@@ -55,9 +55,9 @@ function startQuestions(){
 					viewRoles_8();
 					break;
 
-				// case '9. Add roles':
-				// 	addRoles_9();
-				// 	break;
+				case '9. Add roles':
+					addRoles_9();
+					break;
 
 				case '11. View all departments':
 					viewDepartments_11();
@@ -83,7 +83,7 @@ startQuestions();
 function viewEmployees_1(){
 	console.log("\n\n Here are the roles:");
 		db
-		.getEmployees()
+		.getEmployees_1()
 		.then((results) =>{
 		console.table(results);
 		startQuestions();
@@ -92,22 +92,22 @@ function viewEmployees_1(){
 	function viewRoles_8(){
 		console.log("\n\n Here are the roles:");
 		db
-		.getRoles()
+		.getRoles_8()
 		.then((results) => {
 		console.table(results);
 		startQuestions();
 		});
 	}
 	
-	// function addRoles_9(){
-	// 	createRole()
+	function addRoles_9(){
+		createRole_9()
 	
-	// }
+	}
 
 function viewDepartments_11(){
 	console.log("\n\n Here are the departments:");
 	db
-	.getDepartments()
+	.getDepartments_11()
 	.then((results) =>{
 	console.table(results);
 	startQuestions();
@@ -125,7 +125,7 @@ function addDepartments_12(){
 	.then((results) => {
 		
 	db
-	.createDepartment(results);
+	.createDepartment_12(results);
 	startQuestions();
 	});
 }
@@ -135,7 +135,7 @@ function removeDepartments_13(){
 	// let currentDepartments = []
 	//get the departments and store in `currentDepartments`
 	db
-	.getDepartments()
+	.getDepartments_11()
 	.then( (departments) => {
 		// //WHAT DOES OUR RAW DATA LOOK LIKE
 		// 	console.log("raw: ")
@@ -175,7 +175,7 @@ function removeDepartments_13(){
 		let deletedName = (deletedNameArr[0].name)
 		// console.log(deletedName)
 	db
-	.deleteDepartment(results.department_id);
+	.deleteDepartment_13(results.department_id);
 	console.log(`The ${deletedName} department has been deleted \n`)
 	startQuestions();
 	});
