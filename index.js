@@ -34,7 +34,7 @@ function startQuestions(){
 				// '7. Update employee manager',
 				'8. View all roles',
 				'9. Add roles',
-				// '10. Remove roles',
+				'10. Remove roles',
 				'11. View all departments',
 				'12. Add department',
 				'13. Remove department',
@@ -76,9 +76,9 @@ function startQuestions(){
 				case '9. Add roles':
 					addRoles_9();
 					break;
-				// case '10. Remove roles':
-				// 	removeRoles_5();
-				// 	break;
+				case '10. Remove roles':
+					removeRoles_10();
+					break;
 				case '11. View all departments':
 					viewDepartments_11();
 					break;
@@ -375,7 +375,44 @@ db
 	})
 }
 
-
+function removeRoles_10(){
+	console.log("\n\n Here are the Employees:");
+		db
+		.getRoles_8()
+		.then((roles) =>{
+			// console.log("raw employees")
+			// console.log(employees)
+			const rolesChoices = roles.map((boop) => ({
+				value:boop.id, 
+				name:boop.title
+			}))
+			inquirer
+			.prompt([
+				{
+				type:'list',
+				name: 'id',
+				message: "Select the role to remove.",
+				choices:rolesChoices
+				}
+			])
+			.then(( role ) =>{
+				// console.log("employee.id")
+				// console.log(employee.id)
+				db
+					.deleteRole_10(role.id)
+				//WE DONT NEED A .THEN AFTER THIS BECAUSE WE'RE NOT RETURNING ANYTHING FROM `.deleteEmployee_5`
+	
+					// .then(
+						// (res) =>{
+							// console.table(res);
+							// startQuestions()
+						// });
+			// })
+					console.log(`That role has been removed \n`)
+					startQuestions();
+			});
+		})
+	}
 
 
 

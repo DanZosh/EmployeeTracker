@@ -21,11 +21,6 @@ module.exports = {
     getManagers(){
         return connection.query("SELECT * FROM employees WHERE manager_id IS NULL")
     },
-
-    deleteEmployee_5(data){
-        return connection.query("DELETE FROM employees WHERE id = ?", data)
-    },
-
     createEmployee_4(data){
         console.log("from Create Employee:")
         console.log(data)
@@ -33,6 +28,11 @@ module.exports = {
             "INSERT INTO employees SET ?", data
         );
     },
+    deleteEmployee_5(data){
+        return connection.query("DELETE FROM employees WHERE id = ?", data)
+    },
+
+
 
     getRoles_8(){
         return connection.query("SELECT * FROM roles")
@@ -43,6 +43,9 @@ module.exports = {
         connection.query(
             "INSERT INTO roles SET ?", data
         );
+    },
+    deleteRole_10(data){
+        return connection.query("DELETE FROM roles WHERE id = ?", data)
     },
     getDepartments_11(){
         return connection.query("SELECT * FROM departments")
