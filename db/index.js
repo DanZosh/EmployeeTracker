@@ -5,16 +5,18 @@
 module.exports = {
 
     getEmployees_1(){
-        return connection.query("SELECT * FROM employees")
+    //     return connection.query("SELECT * FROM employees ")
+    // },
+        return connection.query("SELECT * FROM employees INNER JOIN roles ON employees.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id")
     },
 
     getEmployees_byDept_2(data){
         // return connection.query("SELECT * FROM employees WHERE role_id = ?", data)
-        return connection.query("SELECT * FROM employees WHERE role_id IN (SELECT id FROM roles WHERE department_id = ?)", data)
+        return connection.query("SELECT * FROM employees INNER JOIN roles on employees.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id WHERE role_id IN (SELECT id FROM roles WHERE department_id = ?)", data)
     },
 
     viewEmployees_byManager_3(data){
-        return connection.query("SELECT * FROM employees WHERE manager_id = ?", data)
+        return connection.query("SELECT * FROM employees INNER JOIN roles on employees.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id  WHERE manager_id = ?", data)
     },
     getManagers(){
         return connection.query("SELECT * FROM employees WHERE manager_id IS NULL")
@@ -39,7 +41,7 @@ module.exports = {
         return connection.query("SELECT * FROM roles")
     },
     createRole_9(data) {
-        console.log("from Create Roll:")
+        console.log("Ceating new Roll...")
         console.log(data)
         connection.query(
             "INSERT INTO roles SET ?", data

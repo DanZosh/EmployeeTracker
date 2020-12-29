@@ -172,7 +172,7 @@ function viewEmployees_byManager_3(){
 			.viewEmployees_byManager_3(results.manager_id)
 			.then((res) =>{
 				// console.log(res)
-				// console.table(res);
+				console.table(res);
 				startQuestions();
 				});
 		});
