@@ -16,8 +16,6 @@ module.exports = {
     viewEmployees_byManager_3(data){
         return connection.query("SELECT * FROM employees WHERE manager_id = ?", data)
     },
-
-
     getManagers(){
         return connection.query("SELECT * FROM employees WHERE manager_id IS NULL")
     },
@@ -31,7 +29,10 @@ module.exports = {
     deleteEmployee_5(data){
         return connection.query("DELETE FROM employees WHERE id = ?", data)
     },
-
+    reviseEmployeeRole_6(data){
+        return connection.query("UPDATE employees SET ? WHERE ?", data)
+        // the argument `data` should follow the format   [{role_id:var1},{id:var2}]
+    },
 
 
     getRoles_8(){

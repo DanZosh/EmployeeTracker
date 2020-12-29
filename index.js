@@ -30,7 +30,7 @@ function startQuestions(){
 				'3. View all employees by manager',
 				'4. Add employee',
 				'5. Remove employee',
-				// '6. Update employee role',
+				'6. Update employee role',
 				// '7. Update employee manager',
 				'8. View all roles',
 				'9. Add roles',
@@ -59,14 +59,14 @@ function startQuestions(){
 				case '4. Add employee':
 					addEmployees_4();
 					break;
-
 				case '5. Remove employee':
 					removeEmployee_5();
 					break;
 
-				// case '6. Update employee role':
-				// 	updateEmployeeRole_6();
-				// 	break;
+				case '6. Update employee role':
+					updateEmployeeRole_6();
+					break;
+
 				// case '7. Update employee manager':
 				// 	updateEmployeeManager_7();
 				// 	break;
@@ -304,6 +304,80 @@ console.log("\n\n Here are the Employees:");
 }
 
 
+function updateEmployeeRole_6(){
+	console.log("\n\n OK, let's update an Employee's role!");
+	db
+	.getEmployees_1()
+	.then((employees) =>{
+		// console.log("raw employees")
+		// console.log(employees)
+		const employeesChoices = employees.map((boop) => ({
+			value:boop.id, 
+			name:boop.first_name+' '+boop.last_name
+		}))
+		inquirer
+		.prompt([
+			{
+			type:'list',
+			name: 'id',
+			message: "Select the employee to update.",
+			choices:employeesChoices
+			}
+		])
+		.then(( employeeUpdated ) =>{
+			db
+			.getRoles_8()
+			.then( (roles) => {
+					// console.log("raw roles")
+					// console.log(roles)
+					
+					const rolesChoices = roles.map((boop) => ({
+						value:boop.id, 
+						name:boop.title
+					}))
+				
+				inquirer
+				.prompt([
+					{
+					type:'list',
+					name: 'role_id',
+					message: 'Select the updated role in which they will serve.',
+					choices:rolesChoices
+					}
+				])
+				.then((newRole) => {
+					// console.log("Raw input results:")
+					// console.log(results)
+
+					resultsObject = [
+						{role_id : newRole.role_id},
+						{id : employeeUpdated.id}
+					]
+
+
+					// // //GET THE NAME OF THE ROLE TO ALERT THE USER
+					// let roleNameArr = rolesChoices.filter((anObject) => {
+					// 	if (anObject.value == results.role_id){
+					// 		return(anObject)
+					// 	}
+					// })
+					// let roleName = (roleNameArr[0].name)
+					// console.log(roleName)
+				db
+				.reviseEmployeeRole_6(resultsObject);
+				// console.log(`The employee ${results.first_name} ${results.last_name} has been added as ${roleName}. \n`)
+				//OPPORTUNITY TO FLEX HERE, ADD BACK THE ROLL
+
+				startQuestions();
+				});
+			});
+		});
+
+	});
+}
+
+
+// updateEmployeeManager_7
 
 function viewRoles_8(){
 	console.log("\n\n Here are the roles:");
