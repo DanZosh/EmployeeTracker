@@ -31,7 +31,7 @@ function startQuestions(){
 				'4. Add employee',
 				'5. Remove employee',
 				'6. Update employee role',
-				// '7. Update employee manager',
+				'7. Update employee manager',
 				'8. View all roles',
 				'9. Add roles',
 				'10. Remove roles',
@@ -66,10 +66,9 @@ function startQuestions(){
 				case '6. Update employee role':
 					updateEmployeeRole_6();
 					break;
-
-				// case '7. Update employee manager':
-				// 	updateEmployeeManager_7();
-				// 	break;
+				case '7. Update employee manager':
+					updateEmployeeManager_7();
+					break;
 				case '8. View all roles':
 					viewRoles_8();
 					break;
@@ -149,17 +148,22 @@ function viewEmployees_byManager_3(){
 		// console.log("raw managers")
 		// console.log(managers)
 		
-		const managerChoices = managers.map((boop) => ({
+		const managersChoices = managers.map((boop) => ({
 			value:boop.id, 
 			name:boop.first_name+' '+boop.last_name
 		}))
+		const nullObj = {
+			value:null, 
+			name:null
+		};
+			managersChoices.push(nullObj);
 		inquirer
 		.prompt([
 			{
 			type:'list',
 			name: 'manager_id',
-			message: 'Select the manager for whom you with to see their direct reports.',
-			choices:managerChoices
+			message: 'Select the  manager for whom you wish to see employees they serve.',
+			choices:managersChoices
 			},
 		])
 		.then((results) => {
@@ -354,31 +358,81 @@ function updateEmployeeRole_6(){
 						{id : employeeUpdated.id}
 					]
 
-
-					// // //GET THE NAME OF THE ROLE TO ALERT THE USER
-					// let roleNameArr = rolesChoices.filter((anObject) => {
-					// 	if (anObject.value == results.role_id){
-					// 		return(anObject)
-					// 	}
-					// })
-					// let roleName = (roleNameArr[0].name)
-					// console.log(roleName)
 				db
 				.reviseEmployeeRole_6(resultsObject);
-				// console.log(`The employee ${results.first_name} ${results.last_name} has been added as ${roleName}. \n`)
-				//OPPORTUNITY TO FLEX HERE, ADD BACK THE ROLL
-
+				console.log(`The selected employee's role has been updated!`)
 				startQuestions();
 				});
 			});
 		});
-
 	});
 }
 
 
-// updateEmployeeManager_7
+function updateEmployeeManager_7(){
+	console.log("\n\n OK, let's update an Employee's Manager!");
+	db
+	.getEmployees_1()
+	.then((employees) =>{
+		// console.log("raw employees")
+		// console.log(employees)
+		const employeesChoices = employees.map((boop) => ({
+			value:boop.id, 
+			name:boop.first_name+' '+boop.last_name
+		}))
+		inquirer
+		.prompt([
+			{
+			type:'list',
+			name: 'id',
+			message: "Select the employee to update.",
+			choices:employeesChoices
+			}
+		])
+		.then(( employeeUpdated ) =>{
+			db
+			.getManagers()
+			.then( (managers) => {
+					// console.log("raw roles")
+					// console.log(roles)
+					
+					const managersChoices = managers.map((boop) => ({
+						value:boop.id, 
+						name:boop.first_name+' '+boop.last_name
+					}))
+					const nullObj = {
+						value:null, 
+						name:null
+					};
+					managersChoices.push(nullObj);
+				
+				inquirer
+				.prompt([
+					{
+					type:'list',
+					name: 'manager_id',
+					message: 'Select their updated manager.',
+					choices:managersChoices
+					}
+				])
+				.then((newManager) => {
+					// console.log("Raw input results:")
+					// console.log(results)
 
+					resultsObject = [
+						{manager_id : newManager.manager_id},
+						{id : employeeUpdated.id}
+					]
+
+				db
+				.reviseEmployeeRole_6(resultsObject);
+				console.log(`The selected employee's manager has been updated!`)
+				startQuestions();
+				});
+			});
+		});
+	});
+}
 function viewRoles_8(){
 	console.log("\n\n Here are the roles:");
 	db
