@@ -8,18 +8,22 @@ module.exports = {
         return connection.query("SELECT * FROM employees")
     },
 
-    getEmployees_byDept2(data){
+    getEmployees_byDept_2(data){
         // return connection.query("SELECT * FROM employees WHERE role_id = ?", data)
         return connection.query("SELECT * FROM employees WHERE role_id IN (SELECT id FROM roles WHERE department_id = ?)", data)
     },
 
-    viewEmployees_byManager3(data){
+    viewEmployees_byManager_3(data){
         return connection.query("SELECT * FROM employees WHERE manager_id = ?", data)
     },
 
 
     getManagers(){
         return connection.query("SELECT * FROM employees WHERE manager_id IS NULL")
+    },
+
+    deleteEmployee_5(data){
+        return connection.query("DELETE FROM employees WHERE id = ?", data)
     },
 
     createEmployee_4(data){

@@ -29,7 +29,7 @@ function startQuestions(){
 				'2. View all employees by department',
 				'3. View all employees by manager',
 				'4. Add employee',
-				// '5. Remove employee',
+				'5. Remove employee',
 				// '6. Update employee role',
 				// '7. Update employee manager',
 				'8. View all roles',
@@ -51,21 +51,34 @@ function startQuestions(){
 					viewEmployees_1();
 					break;
 				case '2. View all employees by department':
-					viewEmployees_byDept2();
+					viewEmployees_byDept_2();
 					break;
 				case '3. View all employees by manager':
-					viewEmployees_byManager3();
+					viewEmployees_byManager_3();
 					break;
 				case '4. Add employee':
 					addEmployees_4();
 					break;
-			
+
+				case '5. Remove employee':
+					removeEmployee_5();
+					break;
+
+				// case '6. Update employee role':
+				// 	updateEmployeeRole_6();
+				// 	break;
+				// case '7. Update employee manager':
+				// 	updateEmployeeManager_7();
+				// 	break;
 				case '8. View all roles':
 					viewRoles_8();
 					break;
 				case '9. Add roles':
 					addRoles_9();
 					break;
+				// case '10. Remove roles':
+				// 	removeRoles_5();
+				// 	break;
 				case '11. View all departments':
 					viewDepartments_11();
 					break;
@@ -94,7 +107,7 @@ function viewEmployees_1(){
 		});
 	}
 
-function viewEmployees_byDept2(){
+function viewEmployees_byDept_2(){
 	// console.log("\n\n Here are the Employees:");
 	db
 	.getDepartments_11()
@@ -117,7 +130,7 @@ function viewEmployees_byDept2(){
 		.then((results) => {
 			// console.log(results.department_id)
 			db
-			.getEmployees_byDept2(results.department_id)
+			.getEmployees_byDept_2(results.department_id)
 			.then((res) =>{
 				console.log(res)
 				console.table(res);
@@ -128,13 +141,13 @@ function viewEmployees_byDept2(){
 }
 
 
-function viewEmployees_byManager3(){
+function viewEmployees_byManager_3(){
 // console.log("\n\n Here are the Employees:");
 	db
 	.getManagers()
 	.then( (managers) => {
-		console.log("raw managers")
-		console.log(managers)
+		// console.log("raw managers")
+		// console.log(managers)
 		
 		const managerChoices = managers.map((boop) => ({
 			value:boop.id, 
@@ -148,29 +161,27 @@ function viewEmployees_byManager3(){
 			message: 'Select the manager for whom you with to see their direct reports.',
 			choices:managerChoices
 			},
-		]
-		)
+		])
 		.then((results) => {
 			console.log(results.manager_id)
 			db
-			.viewEmployees_byManager3(results.manager_id)
+			.viewEmployees_byManager_3(results.manager_id)
 			.then((res) =>{
-				console.log(res)
-				console.table(res);
+				// console.log(res)
+				// console.table(res);
 				startQuestions();
 				});
 		});
 	})
 }
 
-
-	function addEmployees_4(){
-		console.log("\n\n OK, let's add an Employee!");
+function addEmployees_4(){
+	console.log("\n\n OK, let's add an Employee!");
 	db
 	.getRoles_8()
 	.then( (roles) => {
-		console.log("raw roles")
-		console.log(roles)
+		// console.log("raw roles")
+		// console.log(roles)
 		
 		const rolesChoices = roles.map((boop) => ({
 			value:boop.id, 
@@ -181,8 +192,8 @@ function viewEmployees_byManager3(){
 	db
 	.getManagers()
 	.then( (managers) => {
-		console.log("raw managers")
-		console.log(managers)
+		// console.log("raw managers")
+		// console.log(managers)
 		
 		const managersChoices = managers.map((boop) => ({
 			value:boop.id, 
@@ -194,7 +205,7 @@ function viewEmployees_byManager3(){
 			name:null
 		};
 		managersChoices.push(nullObj);
-		console.log(managersChoices);
+		// console.log(managersChoices);
 	inquirer
 	.prompt([
 		{
@@ -253,26 +264,67 @@ function viewEmployees_byManager3(){
 
 }
 
-	function viewRoles_8(){
-		console.log("\n\n Here are the roles:");
-		db
-		.getRoles_8()
-		.then((results) => {
-		console.table(results);
-		startQuestions();
-		});
-	}
-	
-	function addRoles_9(){
-		console.log("\n\n OK, let's add a Role!");
+function removeEmployee_5(){
+console.log("\n\n Here are the Employees:");
 	db
-	.getDepartments_11()
-	.then( (departments) => {
-		
-		const departmentChoices = departments.map((boop) => ({
+	.getEmployees_1()
+	.then((employees) =>{
+		// console.log("raw employees")
+		// console.log(employees)
+		const employeesChoices = employees.map((boop) => ({
 			value:boop.id, 
-			name:boop.name
+			name:boop.first_name+' '+boop.last_name
 		}))
+		inquirer
+		.prompt([
+			{
+			type:'list',
+			name: 'id',
+			message: "Select the employee to remove.",
+			choices:employeesChoices
+			}
+		])
+		.then(( employee ) =>{
+			// console.log("employee.id")
+			// console.log(employee.id)
+			db
+				.deleteEmployee_5(employee.id)
+			//WE DONT NEED A .THEN AFTER THIS BECAUSE WE'RE NOT RETURNING ANYTHING FROM `.deleteEmployee_5`
+
+				// .then(
+					// (res) =>{
+						// console.table(res);
+						// startQuestions()
+					// });
+		// })
+				console.log(`That employee has been removed \n`)
+				startQuestions();
+		});
+	})
+}
+
+
+
+function viewRoles_8(){
+	console.log("\n\n Here are the roles:");
+	db
+	.getRoles_8()
+	.then((results) => {
+	console.table(results);
+	startQuestions();
+	});
+}
+	
+function addRoles_9(){
+	console.log("\n\n OK, let's add a Role!");
+db
+.getDepartments_11()
+.then( (departments) => {
+	
+	const departmentChoices = departments.map((boop) => ({
+		value:boop.id, 
+		name:boop.name
+	}))
 
 	inquirer
 	.prompt([
@@ -294,10 +346,10 @@ function viewEmployees_byManager3(){
 		},
 	]
 	)
-	
+
 	.then((results) => {
-		console.log("Raw input results:")
-		console.log(results)
+		// console.log("Raw input results:")
+		// console.log(results)
 
 		resultsObject = {
 			title:results.roleTitle,
@@ -314,13 +366,13 @@ function viewEmployees_byManager3(){
 		})
 		let deptName = (deptNameArr[0].name)
 		// console.log(deptName)
-	db
-	.createRole_9(resultsObject);
-	console.log(`The role ${results.roleTitle} with a salary of $${results.roleSalary} has been added to the ${deptName} department. \n`)
+		db
+		.createRole_9(resultsObject);
+		console.log(`The role ${results.roleTitle} with a salary of $${results.roleSalary} has been added to the ${deptName} department. \n`)
 
-	startQuestions();
-	});
-})
+		startQuestions();
+		});
+	})
 }
 
 
