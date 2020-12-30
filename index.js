@@ -131,7 +131,7 @@ function viewEmployees_byDept_2(){
 			db
 			.getEmployees_byDept_2(results.department_id)
 			.then((res) =>{
-				console.log(res)
+				// console.log(res)
 				console.table(res);
 				startQuestions();
 				});
@@ -141,7 +141,7 @@ function viewEmployees_byDept_2(){
 
 
 function viewEmployees_byManager_3(){
-// console.log("\n\n Here are the Employees:");
+console.log("\n\n Here are the Employees:");
 	db
 	.getManagers()
 	.then( (managers) => {
@@ -167,7 +167,7 @@ function viewEmployees_byManager_3(){
 			},
 		])
 		.then((results) => {
-			console.log(results.manager_id)
+			// console.log(results.manager_id)
 			db
 			.viewEmployees_byManager_3(results.manager_id)
 			.then((res) =>{
@@ -237,8 +237,8 @@ function addEmployees_4(){
 	])
 	
 	.then((results) => {
-		console.log("Raw input results:")
-		console.log(results)
+		// console.log("Raw input results:")
+		// console.log(results)
 
 		resultsObject = {
 			first_name:results.first_name,
@@ -255,7 +255,7 @@ function addEmployees_4(){
 			}
 		})
 		let roleName = (roleNameArr[0].name)
-		console.log(roleName)
+		// console.log(roleName)
 	db
 	.createEmployee_4(resultsObject);
 	console.log(`The employee ${results.first_name} ${results.last_name} has been added as ${roleName}. \n`)

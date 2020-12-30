@@ -7,7 +7,7 @@ module.exports = {
     getEmployees_1(){
     //     return connection.query("SELECT * FROM employees ")
     // },
-        return connection.query("SELECT * FROM employees INNER JOIN roles ON employees.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id")
+        return connection.query("SELECT e.id, e.first_name, e.last_name, r.title, r.salary, d.name,CONCAT(m.first_name, ' ', m.last_name) AS Manager FROM  employees e LEFT JOIN roles r on e.role_id = r.id LEFT JOIN departments d on r.department_id = d.id LEFT JOIN employees m on e.manager_id = m.id;")
     },
 
     getEmployees_byDept_2(data){
@@ -22,8 +22,8 @@ module.exports = {
         return connection.query("SELECT * FROM employees WHERE manager_id IS NULL")
     },
     createEmployee_4(data){
-        console.log("from Create Employee:")
-        console.log(data)
+        // console.log("from Create Employee:")
+        // console.log(data)
         connection.query(
             "INSERT INTO employees SET ?", data
         );
