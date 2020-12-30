@@ -50,7 +50,7 @@ module.exports = {
 
 
     getRoles_8(){
-        return connection.query("SELECT r.id, r.title, r.salary FROM roles r "+
+        return connection.query("SELECT r.id, r.title, r.salary, d.name as Department FROM roles r "+
         "INNER JOIN departments d ON r.department_id = d.id")
     },
     createRole_9(data) {
