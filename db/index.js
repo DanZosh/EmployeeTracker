@@ -12,7 +12,11 @@ module.exports = {
 
     getEmployees_byDept_2(data){
         // return connection.query("SELECT * FROM employees WHERE role_id = ?", data)
-        return connection.query("SELECT * FROM employees INNER JOIN roles on employees.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id WHERE role_id IN (SELECT id FROM roles WHERE department_id = ?)", data)
+        return connection.query(
+            // "SELECT * FROM employees INNER JOIN roles on employees.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id WHERE role_id IN (SELECT id FROM roles WHERE department_id = ?)"
+
+            "SELECT d.name, e.id, e.first_name, e.last_name, r.title, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS Manager FROM employees e LEFT JOIN roles r on e.role_id = r.id LEFT JOIN employees m on e.manager_id = m.id LEFT JOIN departments d ON r.department_id = d.id WHERE r.department_id = ?;"
+        , data)
     },
 
     viewEmployees_byManager_3(data){

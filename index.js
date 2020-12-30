@@ -97,7 +97,7 @@ function startQuestions(){
 startQuestions();
 
 function viewEmployees_1(){
-	console.log("\n\n Here are the Employees:");
+	console.log("\n\nHere are the Employees:");
 		db
 		.getEmployees_1()
 		.then((results) =>{
