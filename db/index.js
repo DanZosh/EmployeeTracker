@@ -20,7 +20,15 @@ module.exports = {
     },
 
     viewEmployees_byManager_3(data){
-        return connection.query("SELECT * FROM employees INNER JOIN roles on employees.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id  WHERE manager_id = ?", data)
+        return connection.query(
+            // "SELECT * FROM employees INNER JOIN roles on employees.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id  WHERE manager_id = ?"
+            "SELECT CONCAT(m.first_name, ' ', m.last_name) AS Manager, e.id, e.first_name, e.last_name, r.title, r.salary, d.name " +
+            "FROM employees e " +
+            "LEFT JOIN roles r on e.role_id = r.id " +
+            "LEFT JOIN departments d ON r.department_id = d.id " +
+            "LEFT JOIN employees m on e.manager_id = m.id WHERE e.manager_id = ?;" 
+
+            , data)
     },
     getManagers(){
         return connection.query("SELECT * FROM employees WHERE manager_id IS NULL")
