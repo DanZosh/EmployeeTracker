@@ -50,11 +50,12 @@ module.exports = {
 
 
     getRoles_8(){
-        return connection.query("SELECT * FROM roles INNER JOIN departments ON roles.department_id = departments.id")
+        return connection.query("SELECT r.id, r.title, r.salary FROM roles r "+
+        "INNER JOIN departments d ON r.department_id = d.id")
     },
     createRole_9(data) {
-        console.log("Ceating new Roll...")
-        console.log(data)
+        console.log("Creating new Roll...")
+        // console.log(data)
         connection.query(
             "INSERT INTO roles SET ?", data
         );
