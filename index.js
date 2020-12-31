@@ -542,13 +542,6 @@ function removeRoles_10(){
 		})
 	}
 
-
-
-
-
-
-
-
 function viewDepartments_11(){
 	console.log("\n\n Here are the departments:");
 	db
